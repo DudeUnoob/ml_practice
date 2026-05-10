@@ -1,134 +1,136 @@
-# Deep Learning From Scratch
+# Deep Learning From Nothing
 
-This repository is a guided path for learning deep learning from the ground up by
-deriving the ideas, implementing them with small amounts of Python/NumPy, and
-testing each piece until the mechanics feel concrete.
+This repo is now organized as an interactive workshop for someone starting from
+zero. You do not begin by reading finished code. You begin by editing tiny
+workbook files, running a checker, reading a hint only when stuck, and repeating
+until the idea becomes mechanical.
 
-The goal is not to memorize framework APIs. The goal is to build the mental
-model behind them:
+## Start here
 
-1. What is a model?
-2. What is a loss?
-3. Why do gradients point toward useful parameter updates?
-4. How does backpropagation avoid recomputing the same work?
-5. Why do initialization, normalization, optimization, and regularization matter?
-6. How do modern layers such as convolutions and attention fit the same pattern?
+1. Open [`START_HERE.md`](START_HERE.md).
+2. Run:
 
-## How to use this repo
+   ```bash
+   python3 -m pip install -e ".[dev]"
+   python3 tools/coach.py list
+   python3 tools/coach.py show 01
+   ```
 
-Use the loop below for each lesson:
+3. Edit the file shown by the coach.
+4. Check your work:
 
-1. **Read** the short lesson note.
-2. **Predict** what the implementation should do before opening the code.
-3. **Implement or modify** the referenced function.
-4. **Run tests** for fast feedback.
-5. **Run an experiment** and inspect failure modes.
-6. **Write one paragraph** explaining the mechanism in your own words.
+   ```bash
+   python3 tools/coach.py check 01
+   ```
 
-This read -> derive -> implement -> test -> reflect loop is slower than watching
-videos, but it builds intuition that transfers to new architectures.
+The workbook checks are expected to fail at first. That is the point: each
+failure tells you exactly what concept to implement next.
 
-## Setup
+## Learning method
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e ".[dev]"
-pytest
+Each step follows the same loop:
+
+```text
+1. Build intuition with a concrete example.
+2. Predict the output by hand.
+3. Implement the smallest possible function.
+4. Run the checker.
+5. Read one hint if stuck.
+6. Compare with the reference solution only after trying.
+7. Write a short explanation in your own words.
 ```
 
-The implementation intentionally depends only on NumPy for the core learning
-path. PyTorch/JAX/TensorFlow are useful later, but they hide the machinery this
-repo is designed to expose.
+This is designed to feel like a guided coding tutor, not a textbook dump.
 
 ## Repository map
 
 ```text
-lessons/                         Conceptual notes in the recommended order
-exercises/                       Guided prompts and checkpoints
+START_HERE.md                    Beginner onboarding and exact first commands
+curriculum/ROADMAP.md            Full ordered path from Python numbers to transformers
+workbook/steps/                  Files you edit by hand
+workbook/checks.py               Step-specific checks used by the coach
+solutions/steps/                 Reference implementations to compare after trying
+lessons/                         Concept notes for each major idea
+src/deep_learning_from_scratch/   Finished reference implementation
 scripts/                         Runnable experiments
-src/deep_learning_from_scratch/   Small teaching implementation
-tests/                           Executable specifications for the core ideas
+tests/                           Repo-level tests for the reference and tooling
 ```
 
-## Learning path
+## The two tracks
 
-### Stage 0: Orientation
+### Track A: interactive workbook
 
-- [Lesson 00 - Learning method and setup](lessons/00_learning_method.md)
-- Outcome: you know how to run tests and how each activity reinforces intuition.
+This is the main learning path. You implement:
 
-### Stage 1: Mathematical primitives
+1. Python arithmetic, means, losses, finite differences.
+2. Vectors and matrices from plain Python lists.
+3. Linear regression and gradient descent.
+4. A tiny scalar autograd engine.
+5. Neurons and multilayer perceptrons.
+6. NumPy arrays, broadcasting, and vectorized dense layers.
+7. Softmax classification.
+8. Attention.
 
-- [Lesson 01 - Scalars, vectors, matrices, and derivatives](lessons/01_math_primitives.md)
-- Implement: scalar arithmetic, finite differences, vectorized data transforms.
-- Outcome: you can explain a gradient as local sensitivity.
-
-### Stage 2: Optimization before neural networks
-
-- [Lesson 02 - Linear models and gradient descent](lessons/02_linear_models.md)
-- Implement: predictions, mean squared error, cross entropy, gradient descent.
-- Outcome: you can train a model by changing parameters to reduce a loss.
-
-### Stage 3: Backpropagation
-
-- [Lesson 03 - Reverse-mode automatic differentiation](lessons/03_backpropagation.md)
-- Code: `deep_learning_from_scratch.autograd.Value`
-- Outcome: you can build a computation graph and push gradients backward.
-
-### Stage 4: Neural networks as composed functions
-
-- [Lesson 04 - Multilayer perceptrons](lessons/04_multilayer_perceptrons.md)
-- Code: `deep_learning_from_scratch.nn`
-- Outcome: you can train an MLP from scratch on non-linear data.
-
-### Stage 5: Practical training mechanics
-
-- [Lesson 05 - Training loops, initialization, and generalization](lessons/05_training_mechanics.md)
-- Code: `deep_learning_from_scratch.numpy_nn`
-- Outcome: you can diagnose underfitting, overfitting, unstable updates, and bad
-  initialization.
-
-### Stage 6: Modern building blocks
-
-- [Lesson 06 - Attention and sequence modeling](lessons/06_attention.md)
-- Code: `deep_learning_from_scratch.attention`
-- Outcome: you can explain attention as content-based weighted averaging and
-  understand why transformers scale.
-
-### Stage 7: Capstone
-
-- [Lesson 07 - Capstone projects](lessons/07_capstone.md)
-- Outcome: you build a small model end-to-end, write a short report, and compare
-  your scratch implementation with a production framework.
-
-## First commands to run
+Run:
 
 ```bash
-pytest tests/test_autograd.py
-python scripts/train_mlp_spiral.py --epochs 200 --hidden 16 --learning-rate 0.08
-python scripts/inspect_attention.py
+python3 tools/coach.py list
 ```
 
-## What "from scratch" means here
+### Track B: reference implementation
 
-This repo avoids deep learning frameworks while learning core mechanics. It does
-use:
+After struggling with the workbook, inspect the finished implementation in
+`src/deep_learning_from_scratch/`. This gives you clean code to compare against
+your own implementation.
 
-- Python for control flow.
-- NumPy for arrays and linear algebra.
-- Pytest for executable checks.
+Run:
 
-You will still write the forward pass, backward pass, parameter update, loss
-calculation, and attention operation yourself.
+```bash
+python3 -m pytest
+python3 scripts/train_mlp_spiral.py --epochs 200 --hidden 16 --learning-rate 0.08
+python3 scripts/inspect_attention.py
+```
 
-## Suggested study cadence
+## Why this order?
 
-For each lesson, aim to produce three artifacts:
+Deep learning can look huge because people introduce everything at once:
+tensors, frameworks, GPUs, optimizers, initialization, backpropagation, datasets,
+and architecture names. This repo separates those ideas.
 
-1. A passing test.
-2. A small experiment result.
-3. A written explanation of the main idea.
+You first learn one number. Then a list of numbers. Then a matrix. Then a loss.
+Then a gradient. Then an update. Then backpropagation. Then layers. Then
+vectorization. Then attention.
 
-If you can make a broken training run work and explain why it was broken, you
-are learning the important part.
+Every advanced concept is built as a small extension of a previous concept.
+
+## What to do when stuck
+
+Use hints in increasing order:
+
+```bash
+python3 tools/coach.py hint 03 1
+python3 tools/coach.py hint 03 2
+python3 tools/coach.py hint 03 3
+```
+
+Then compare with:
+
+```bash
+python3 tools/coach.py solution 03
+```
+
+Do not start with the solution. The learning happens while your implementation
+is incomplete and you are debugging it.
+
+## Verification for maintainers
+
+The normal test suite validates the finished reference implementation and the
+coach tooling:
+
+```bash
+python3 -m pytest
+python3 tools/coach.py check all --solution
+```
+
+The default workbook checks target `workbook/steps/` and may fail until a learner
+fills in the TODOs.
