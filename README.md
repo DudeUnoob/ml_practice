@@ -49,6 +49,7 @@ exercises/                       Guided prompts and checkpoints
 scripts/                         Runnable experiments
 src/deep_learning_from_scratch/   Small teaching implementation
 tests/                           Executable specifications for the core ideas
+docs/                            Extended guides (see local_gpt.md)
 ```
 
 ## Learning path
@@ -101,57 +102,35 @@ tests/                           Executable specifications for the core ideas
 - [Lesson 07 - Capstone projects](lessons/07_capstone.md)
 - Outcome: you build a small model end-to-end, write a short report, and compare
   your scratch implementation with a production framework.
+- **Local GPT:** [docs/local_gpt.md](docs/local_gpt.md) — train and query a
+  PyTorch GPT on your own GPU (including AMD RX 5700 XT).
 
 ## Local GPT (PyTorch)
 
 This repo includes a decoder-only GPT transformer you can train and query on
 local hardware, including AMD Radeon GPUs such as the RX 5700 XT (8 GB VRAM).
 
-### AMD GPU setup (Linux + ROCm)
+**Full documentation:** [docs/local_gpt.md](docs/local_gpt.md) — architecture,
+AMD/NVIDIA setup, training, chat, HTTP API, troubleshooting, and extension guide.
 
-Install PyTorch built for ROCm, then install the GPT extras:
-
-```bash
-python -m pip install torch --index-url https://download.pytorch.org/whl/rocm6.2
-python -m pip install -e ".[gpt,dev]"
-```
-
-On Linux, ROCm exposes the GPU through `torch.cuda`, so training and inference
-use the same commands as NVIDIA CUDA builds.
-
-### Train
+### Quick start
 
 ```bash
+# Install PyTorch for your platform, then:
+python -m pip install -e ".[gpt,dev,api]"
+
+# Train (5700 XT preset)
 python scripts/train_gpt.py --preset rx5700xt --max-iters 5000
+
+# Query
+python scripts/chat_gpt.py --greedy --prompt "What does GPT stand for?"
+
+# Test
+pytest
 ```
 
-Presets: `tiny` (smoke tests), `rx5700xt` (recommended for 8 GB VRAM),
-`local-large` (heavier model, mainly for inference).
-
-The first run downloads the Shakespeare corpus into `data/gpt/shakespeare.txt`.
-Question-answer examples live in `data/gpt/instruct.txt`.
-
-### Chat / query
-
-```bash
-python scripts/chat_gpt.py
-python scripts/chat_gpt.py --prompt "What does GPT stand for?"
-python scripts/chat_gpt.py --greedy --prompt "What is 2 + 2?"
-```
-
-The chat script formats your input as `Question: ...\nAnswer:` and extracts the
-generated answer text. Use `--greedy` for deterministic decoding when querying
-facts from the instruct corpus.
-
-### HTTP API (optional)
-
-```bash
-python -m pip install -e ".[gpt,api]"
-python scripts/serve_gpt.py
-curl -X POST http://127.0.0.1:8000/query \
-  -H 'Content-Type: application/json' \
-  -d '{"prompt":"What does GPT stand for?","greedy":true}'
-```
+On Linux with ROCm, install PyTorch from the ROCm wheel index; the GPU is exposed
+via `torch.cuda`. See the [hardware section in docs/local_gpt.md](docs/local_gpt.md#hardware-and-pytorch-builds) for AMD, NVIDIA, Apple, and CPU builds.
 
 ## First commands to run
 
