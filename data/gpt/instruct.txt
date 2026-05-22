@@ -1,0 +1,164 @@
+Question: What is the capital of France?
+Answer: Paris.
+
+Question: What is 2 + 2?
+Answer: 4.
+
+Question: Who wrote Romeo and Juliet?
+Answer: William Shakespeare.
+
+Question: What planet do humans live on?
+Answer: Earth.
+
+Question: What is the chemical symbol for water?
+Answer: H2O.
+
+Question: How many days are in a leap year?
+Answer: 366.
+
+Question: What is the speed of light in vacuum (approximate)?
+Answer: 300,000 kilometers per second.
+
+Question: What programming language is PyTorch primarily used from?
+Answer: Python.
+
+Question: What is a transformer in deep learning?
+Answer: A neural network architecture that uses self-attention to model sequences.
+
+Question: What GPU vendor makes the Radeon RX 5700 XT?
+Answer: AMD.
+
+Question: What does GPT stand for?
+Answer: Generative Pre-trained Transformer.
+
+Question: What is gradient descent?
+Answer: An optimization algorithm that updates parameters to reduce loss.
+
+Question: What is backpropagation?
+Answer: An algorithm for computing gradients of a loss with respect to model parameters.
+
+Question: What is a token in language modeling?
+Answer: A discrete unit of text, such as a character, subword, or word piece.
+
+Question: What is the purpose of a causal mask in GPT?
+Answer: It prevents the model from attending to future tokens while predicting the next token.
+
+Question: What is cross-entropy loss used for in language models?
+Answer: It measures how well predicted token probabilities match the true next token.
+
+Question: What is temperature in text generation?
+Answer: A scaling factor applied to logits that controls randomness.
+
+Question: What is top-k sampling?
+Answer: A decoding strategy that samples only from the k most likely next tokens.
+
+Question: What is the block size in GPT?
+Answer: The maximum context length, measured in tokens, that the model can process at once.
+
+Question: What is mixed precision training?
+Answer: Training with lower-precision floats such as float16 or bfloat16 to save memory and increase speed.
+
+Question: What is ROCm?
+Answer: AMD's open software platform for GPU compute, used to run PyTorch on Radeon GPUs.
+
+Question: How much VRAM does an RX 5700 XT have?
+Answer: 8 gigabytes.
+
+Question: What is an embedding layer?
+Answer: A lookup table that maps token ids to dense vector representations.
+
+Question: What is layer normalization?
+Answer: A normalization technique that stabilizes activations within a layer.
+
+Question: What is self-attention?
+Answer: A mechanism where each token builds a weighted combination of other tokens in the sequence.
+
+Question: What is the difference between training and inference?
+Answer: Training updates model weights using data; inference uses fixed weights to generate outputs.
+
+Question: What is a checkpoint?
+Answer: A saved snapshot of model weights and configuration during or after training.
+
+Question: What is overfitting?
+Answer: When a model memorizes training data and performs poorly on unseen examples.
+
+Question: What is a learning rate?
+Answer: The step size used when updating model parameters during optimization.
+
+Question: What is weight decay?
+Answer: A regularization technique that penalizes large parameter values.
+
+Question: What is the first line of Hamlet's famous soliloquy?
+Answer: To be, or not to be, that is the question.
+
+Question: Who is the prince of Denmark in Hamlet?
+Answer: Hamlet.
+
+Question: Who is the jealous villain in Othello?
+Answer: Iago.
+
+Question: Who is the Scottish king in Macbeth?
+Answer: Macbeth.
+
+Question: Who are the young lovers in Romeo and Juliet?
+Answer: Romeo and Juliet.
+
+Question: Who is the magician in The Tempest?
+Answer: Prospero.
+
+Question: Who is the witty heroine in Much Ado About Nothing?
+Answer: Beatrice.
+
+Question: Who is the fairy king in A Midsummer Night's Dream?
+Answer: Oberon.
+
+Question: Who is the fat knight in Henry IV?
+Answer: Falstaff.
+
+Question: Who is the Roman general in Julius Caesar?
+Answer: Julius Caesar.
+
+Question: Who gives the funeral oration for Caesar?
+Answer: Mark Antony.
+
+Question: Who is the Egyptian queen in Antony and Cleopatra?
+Answer: Cleopatra.
+
+Question: Who is the king in King Lear?
+Answer: Lear.
+
+Question: Who is the cross-dressing heroine in Twelfth Night?
+Answer: Viola.
+
+Question: What is a sonnet?
+Answer: A fourteen-line poem, often with a specific rhyme scheme.
+
+Question: In which city was Shakespeare born?
+Answer: Stratford-upon-Avon.
+
+Question: What year was Shakespeare born?
+Answer: 1564.
+
+Question: What year did Shakespeare die?
+Answer: 1616.
+
+Question: How many sonnets did Shakespeare write?
+Answer: 154.
+
+Question: What is the opening line of Shakespeare's Sonnet 18?
+Answer: Shall I compare thee to a summer's day?
+
+Question: What is the opening line of Richard III?
+Answer: Now is the winter of our discontent.
+
+Question: What is the opening line of Twelfth Night?
+Answer: If music be the food of love, play on.
+
+Question: What is the opening line of Romeo and Juliet?
+Answer: Two households, both alike in dignity.
+
+Question: What is the opening line of Macbeth?
+Answer: When shall we three meet again?
+
+Question: What is the opening line of Hamlet?
+Answer: Who's there?

@@ -102,6 +102,57 @@ tests/                           Executable specifications for the core ideas
 - Outcome: you build a small model end-to-end, write a short report, and compare
   your scratch implementation with a production framework.
 
+## Local GPT (PyTorch)
+
+This repo includes a decoder-only GPT transformer you can train and query on
+local hardware, including AMD Radeon GPUs such as the RX 5700 XT (8 GB VRAM).
+
+### AMD GPU setup (Linux + ROCm)
+
+Install PyTorch built for ROCm, then install the GPT extras:
+
+```bash
+python -m pip install torch --index-url https://download.pytorch.org/whl/rocm6.2
+python -m pip install -e ".[gpt,dev]"
+```
+
+On Linux, ROCm exposes the GPU through `torch.cuda`, so training and inference
+use the same commands as NVIDIA CUDA builds.
+
+### Train
+
+```bash
+python scripts/train_gpt.py --preset rx5700xt --max-iters 5000
+```
+
+Presets: `tiny` (smoke tests), `rx5700xt` (recommended for 8 GB VRAM),
+`local-large` (heavier model, mainly for inference).
+
+The first run downloads the Shakespeare corpus into `data/gpt/shakespeare.txt`.
+Question-answer examples live in `data/gpt/instruct.txt`.
+
+### Chat / query
+
+```bash
+python scripts/chat_gpt.py
+python scripts/chat_gpt.py --prompt "What does GPT stand for?"
+python scripts/chat_gpt.py --greedy --prompt "What is 2 + 2?"
+```
+
+The chat script formats your input as `Question: ...\nAnswer:` and extracts the
+generated answer text. Use `--greedy` for deterministic decoding when querying
+facts from the instruct corpus.
+
+### HTTP API (optional)
+
+```bash
+python -m pip install -e ".[gpt,api]"
+python scripts/serve_gpt.py
+curl -X POST http://127.0.0.1:8000/query \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt":"What does GPT stand for?","greedy":true}'
+```
+
 ## First commands to run
 
 ```bash

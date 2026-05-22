@@ -16,6 +16,14 @@ dependencies = [
 dev = [
     "pytest",
 ]
+gpt = [
+    "torch>=2.0",
+]
+api = [
+    "fastapi>=0.110",
+    "uvicorn>=0.27",
+    "pydantic>=2.0",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
