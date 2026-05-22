@@ -49,6 +49,7 @@ exercises/                       Guided prompts and checkpoints
 scripts/                         Runnable experiments
 src/deep_learning_from_scratch/   Small teaching implementation
 tests/                           Executable specifications for the core ideas
+docs/                            Extended guides (see local_gpt.md)
 ```
 
 ## Learning path
@@ -101,6 +102,35 @@ tests/                           Executable specifications for the core ideas
 - [Lesson 07 - Capstone projects](lessons/07_capstone.md)
 - Outcome: you build a small model end-to-end, write a short report, and compare
   your scratch implementation with a production framework.
+- **Local GPT:** [docs/local_gpt.md](docs/local_gpt.md) — train and query a
+  PyTorch GPT on your own GPU (including AMD RX 5700 XT).
+
+## Local GPT (PyTorch)
+
+This repo includes a decoder-only GPT transformer you can train and query on
+local hardware, including AMD Radeon GPUs such as the RX 5700 XT (8 GB VRAM).
+
+**Full documentation:** [docs/local_gpt.md](docs/local_gpt.md) — architecture,
+AMD/NVIDIA setup, training, chat, HTTP API, troubleshooting, and extension guide.
+
+### Quick start
+
+```bash
+# Install PyTorch for your platform, then:
+python -m pip install -e ".[gpt,dev,api]"
+
+# Train (5700 XT preset)
+python scripts/train_gpt.py --preset rx5700xt --max-iters 5000
+
+# Query
+python scripts/chat_gpt.py --greedy --prompt "What does GPT stand for?"
+
+# Test
+pytest
+```
+
+On Linux with ROCm, install PyTorch from the ROCm wheel index; the GPU is exposed
+via `torch.cuda`. See the [hardware section in docs/local_gpt.md](docs/local_gpt.md#hardware-and-pytorch-builds) for AMD, NVIDIA, Apple, and CPU builds.
 
 ## First commands to run
 
