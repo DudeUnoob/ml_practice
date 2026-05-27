@@ -1,16 +1,19 @@
-import pandas as pd
+from pathlib import Path
+
 import joblib
+import pandas as pd
+from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.preprocessing import StandardScaler
+
+APP_DIR = Path(__file__).resolve().parent
 
 
 
 # Step 1: Load and prepare your data
 # (This is just an example, replace with your actual data loading code)
 def load_data():
-    # Example using iris dataset - replace with your data
-    from sklearn.datasets import load_iris
     iris = load_iris()
     X = pd.DataFrame(iris.data, columns=iris.feature_names)
     y = iris.target
@@ -55,12 +58,10 @@ def train_model():
     print(f"Best model accuracy: {best_accuracy:.4f}")
     
     
-    # Save the model and scaler
-    joblib.dump(best_model, 'model.joblib')
-    joblib.dump(scaler, 'scaler.joblib')
+    joblib.dump(best_model, APP_DIR / "model.joblib")
+    joblib.dump(scaler, APP_DIR / "scaler.joblib")
     print("Model and scaler saved to disk.")
-    
-# Step 3: Save the model and scaler
+
     return best_model, scaler
 
 

@@ -1,6 +1,19 @@
 .venv
 __pycache__/
+*.pyc
 .pytest_cache/
 *.egg-info/
+.ipynb_checkpoints/
+
+# Generated model artifacts
 checkpoints/
+*.joblib
+checkpoint.pt
+tokenizer.json
+
+# Large or downloadable training data
 data/gpt/shakespeare.txt
+
+# Competition submission outputs
+**/logit_subm*.txt
+**/logit_subm*.zip
