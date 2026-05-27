@@ -1,15 +1,22 @@
+from pathlib import Path
+
+import joblib
+import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import joblib
-import numpy as np
 import uvicorn
 
-# Load the trained model and scaler
-try:
-    model = joblib.load('model.joblib')
-    scaler = joblib.load('scaler.joblib')
-except:
-    raise Exception("Model files not found. Run train_model.py first.")
+APP_DIR = Path(__file__).resolve().parent
+MODEL_PATH = APP_DIR / "model.joblib"
+SCALER_PATH = APP_DIR / "scaler.joblib"
+
+if not MODEL_PATH.exists() or not SCALER_PATH.exists():
+    raise FileNotFoundError(
+        "Model files not found. Run `python train_model.py` from notebooks/iris_api first."
+    )
+
+model = joblib.load(MODEL_PATH)
+scaler = joblib.load(SCALER_PATH)
 
 # Create FastAPI app
 app = FastAPI(title="ML Model API",
@@ -44,8 +51,6 @@ class PredictionOutput(BaseModel):
 @app.post("/predict", response_model=PredictionOutput)
 async def predict(data: InputData):
     try:
-        # Convert input data to DataFrame with column names to avoid the warning
-        import pandas as pd
         input_data = pd.DataFrame([[
             data.sepal_length,
             data.sepal_width,

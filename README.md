@@ -1,22 +1,91 @@
-# Deep Learning From Scratch
+# ML Practice
 
-This repository is a guided path for learning deep learning from the ground up by
-deriving the ideas, implementing them with small amounts of Python/NumPy, and
-testing each piece until the mechanics feel concrete.
+A personal machine learning workspace with two complementary tracks:
 
-The goal is not to memorize framework APIs. The goal is to build the mental
-model behind them:
+1. **Deep learning from scratch** — build intuition for neural networks, backprop,
+   and transformers using small NumPy implementations and guided lessons.
+2. **Classical ML notebooks** — scikit-learn practice on tabular, text, and
+   time-series datasets.
+
+The first track teaches *mechanisms* (what gradients, layers, and attention actually
+do). The second track teaches *workflow* (EDA, model selection, hyperparameter
+tuning, and serving predictions).
+
+---
+
+## Quick start
+
+**Requirements:** Python 3.10+
+
+```bash
+git clone https://github.com/DudeUnoob/ml_practice.git
+cd ml_practice
+python -m venv .venv
+```
+
+Activate the virtual environment:
+
+```powershell
+# Windows (PowerShell)
+.venv\Scripts\Activate.ps1
+```
+
+```bash
+# macOS / Linux
+source .venv/bin/activate
+```
+
+Install the core package and run tests:
+
+```bash
+python -m pip install -e ".[dev]"
+pytest
+```
+
+### Optional extras
+
+| Extra | Install command | Use case |
+|-------|-----------------|----------|
+| `dev` | `pip install -e ".[dev]"` | pytest (included above) |
+| `notebooks` | `pip install -e ".[notebooks]"` | Jupyter + scikit-learn practice |
+| `gpt` | `pip install -e ".[gpt,dev]"` | Local PyTorch GPT training |
+| `api` | `pip install -e ".[api]"` | FastAPI serving (GPT or Iris example) |
+
+Combine extras as needed, e.g. `pip install -e ".[notebooks,api,gpt,dev]"`.
+
+---
+
+## Repository layout
+
+```text
+ml_practice/
+├── lessons/                          Guided deep-learning curriculum (start here)
+├── exercises/                        Checkpoints and mastery rubric
+├── src/deep_learning_from_scratch/   NumPy teaching implementations + PyTorch GPT
+├── scripts/                          Runnable experiments and GPT CLI tools
+├── tests/                            Executable specs for core ideas
+├── docs/                             Extended guides (local GPT)
+├── data/gpt/                         Sample training text for the GPT module
+└── notebooks/                        scikit-learn Jupyter projects (separate track)
+```
+
+---
+
+## Track 1: Deep learning from scratch
+
+The goal is not to memorize framework APIs. The goal is to build the mental model
+behind them:
 
 1. What is a model?
 2. What is a loss?
 3. Why do gradients point toward useful parameter updates?
 4. How does backpropagation avoid recomputing the same work?
 5. Why do initialization, normalization, optimization, and regularization matter?
-6. How do modern layers such as convolutions and attention fit the same pattern?
+6. How do modern layers such as attention fit the same pattern?
 
-## How to use this repo
+### Study loop
 
-Use the loop below for each lesson:
+For each lesson:
 
 1. **Read** the short lesson note.
 2. **Predict** what the implementation should do before opening the code.
@@ -25,114 +94,26 @@ Use the loop below for each lesson:
 5. **Run an experiment** and inspect failure modes.
 6. **Write one paragraph** explaining the mechanism in your own words.
 
-This read -> derive -> implement -> test -> reflect loop is slower than watching
+This read → derive → implement → test → reflect loop is slower than watching
 videos, but it builds intuition that transfers to new architectures.
 
-## Setup
+### Learning path
 
-```bash
-python -m venv .venv
-source .venv/bin/activate
-python -m pip install -e ".[dev]"
-pytest
-```
+| Stage | Lesson | Code module | Outcome |
+|-------|--------|-------------|---------|
+| 0 | [Learning method](lessons/00_learning_method.md) | — | Run tests; know the study loop |
+| 1 | [Math primitives](lessons/01_math_primitives.md) | — | Explain a gradient as local sensitivity |
+| 2 | [Linear models](lessons/02_linear_models.md) | — | Train by minimizing a loss |
+| 3 | [Backpropagation](lessons/03_backpropagation.md) | `autograd.Value` | Push gradients through a computation graph |
+| 4 | [MLPs](lessons/04_multilayer_perceptrons.md) | `nn` | Train a multilayer network on non-linear data |
+| 5 | [Training mechanics](lessons/05_training_mechanics.md) | `numpy_nn` | Diagnose under/overfitting and unstable training |
+| 6 | [Attention](lessons/06_attention.md) | `attention` | Explain attention as weighted retrieval |
+| 7 | [Capstone](lessons/07_capstone.md) | scripts + GPT | End-to-end project with a short report |
 
-The implementation intentionally depends only on NumPy for the core learning
-path. PyTorch/JAX/TensorFlow are useful later, but they hide the machinery this
-repo is designed to expose.
+See [exercises/README.md](exercises/README.md) for checkpoint prompts and a
+mastery rubric.
 
-## Repository map
-
-```text
-lessons/                         Conceptual notes in the recommended order
-exercises/                       Guided prompts and checkpoints
-scripts/                         Runnable experiments
-src/deep_learning_from_scratch/   Small teaching implementation
-tests/                           Executable specifications for the core ideas
-docs/                            Extended guides (see local_gpt.md)
-```
-
-## Learning path
-
-### Stage 0: Orientation
-
-- [Lesson 00 - Learning method and setup](lessons/00_learning_method.md)
-- Outcome: you know how to run tests and how each activity reinforces intuition.
-
-### Stage 1: Mathematical primitives
-
-- [Lesson 01 - Scalars, vectors, matrices, and derivatives](lessons/01_math_primitives.md)
-- Implement: scalar arithmetic, finite differences, vectorized data transforms.
-- Outcome: you can explain a gradient as local sensitivity.
-
-### Stage 2: Optimization before neural networks
-
-- [Lesson 02 - Linear models and gradient descent](lessons/02_linear_models.md)
-- Implement: predictions, mean squared error, cross entropy, gradient descent.
-- Outcome: you can train a model by changing parameters to reduce a loss.
-
-### Stage 3: Backpropagation
-
-- [Lesson 03 - Reverse-mode automatic differentiation](lessons/03_backpropagation.md)
-- Code: `deep_learning_from_scratch.autograd.Value`
-- Outcome: you can build a computation graph and push gradients backward.
-
-### Stage 4: Neural networks as composed functions
-
-- [Lesson 04 - Multilayer perceptrons](lessons/04_multilayer_perceptrons.md)
-- Code: `deep_learning_from_scratch.nn`
-- Outcome: you can train an MLP from scratch on non-linear data.
-
-### Stage 5: Practical training mechanics
-
-- [Lesson 05 - Training loops, initialization, and generalization](lessons/05_training_mechanics.md)
-- Code: `deep_learning_from_scratch.numpy_nn`
-- Outcome: you can diagnose underfitting, overfitting, unstable updates, and bad
-  initialization.
-
-### Stage 6: Modern building blocks
-
-- [Lesson 06 - Attention and sequence modeling](lessons/06_attention.md)
-- Code: `deep_learning_from_scratch.attention`
-- Outcome: you can explain attention as content-based weighted averaging and
-  understand why transformers scale.
-
-### Stage 7: Capstone
-
-- [Lesson 07 - Capstone projects](lessons/07_capstone.md)
-- Outcome: you build a small model end-to-end, write a short report, and compare
-  your scratch implementation with a production framework.
-- **Local GPT:** [docs/local_gpt.md](docs/local_gpt.md) — train and query a
-  PyTorch GPT on your own GPU (including AMD RX 5700 XT).
-
-## Local GPT (PyTorch)
-
-This repo includes a decoder-only GPT transformer you can train and query on
-local hardware, including AMD Radeon GPUs such as the RX 5700 XT (8 GB VRAM).
-
-**Full documentation:** [docs/local_gpt.md](docs/local_gpt.md) — architecture,
-AMD/NVIDIA setup, training, chat, HTTP API, troubleshooting, and extension guide.
-
-### Quick start
-
-```bash
-# Install PyTorch for your platform, then:
-python -m pip install -e ".[gpt,dev,api]"
-
-# Train (5700 XT preset)
-python scripts/train_gpt.py --preset rx5700xt --max-iters 5000
-
-# Query
-python scripts/chat_gpt.py --greedy --prompt "What does GPT stand for?"
-
-# Test
-pytest
-```
-
-On Linux with ROCm, install PyTorch from the ROCm wheel index; the GPU is exposed
-via `torch.cuda`. See the [hardware section in docs/local_gpt.md](docs/local_gpt.md#hardware-and-pytorch-builds) for AMD, NVIDIA, Apple, and CPU builds.
-
-## First commands to run
+### First commands
 
 ```bash
 pytest tests/test_autograd.py
@@ -140,25 +121,94 @@ python scripts/train_mlp_spiral.py --epochs 200 --hidden 16 --learning-rate 0.08
 python scripts/inspect_attention.py
 ```
 
-## What "from scratch" means here
+### What "from scratch" means here
 
-This repo avoids deep learning frameworks while learning core mechanics. It does
-use:
+Core mechanics use only **Python** and **NumPy**. You write the forward pass,
+backward pass, parameter updates, loss, and attention yourself. Pytest provides
+executable checks.
 
-- Python for control flow.
-- NumPy for arrays and linear algebra.
-- Pytest for executable checks.
+PyTorch appears only in the optional **GPT module** — a production-style
+transformer that applies the same ideas at scale on local hardware.
 
-You will still write the forward pass, backward pass, parameter update, loss
-calculation, and attention operation yourself.
+---
+
+## Track 2: Classical ML notebooks
+
+Jupyter notebooks for classification, regression, time series, and a competition
+template live under [notebooks/](notebooks/). See [notebooks/README.md](notebooks/README.md)
+for the full project index and setup.
+
+```bash
+python -m pip install -e ".[notebooks]"
+jupyter lab
+```
+
+Notable projects:
+
+- **iris_dataset** — gentle multi-class classification intro
+- **lasso_regression** — OLS, Lasso, Ridge, Random Forest (mlcourse.ai material)
+- **logistic_regression_classification** — binary classification with GridSearchCV
+- **iris_api** — train a Random Forest and serve it with FastAPI
+
+---
+
+## Local GPT (PyTorch)
+
+Train and query a decoder-only GPT on your own GPU, including AMD Radeon cards
+such as the RX 5700 XT (8 GB VRAM).
+
+**Full guide:** [docs/local_gpt.md](docs/local_gpt.md) — architecture, AMD/NVIDIA
+setup, training, chat, HTTP API, troubleshooting, and extensions.
+
+### Quick start
+
+```bash
+# Install PyTorch for your platform first, then:
+python -m pip install -e ".[gpt,dev,api]"
+
+# Train (5700 XT preset)
+python scripts/train_gpt.py --preset rx5700xt --max-iters 5000
+
+# Chat
+python scripts/chat_gpt.py --greedy --prompt "What does GPT stand for?"
+
+# HTTP API
+python scripts/serve_gpt.py
+```
+
+On Linux with ROCm, install PyTorch from the ROCm wheel index; the GPU is exposed
+via `torch.cuda`. See the [hardware section](docs/local_gpt.md#hardware-and-pytorch-builds)
+in the GPT docs.
+
+---
+
+## Scripts reference
+
+| Script | Description |
+|--------|-------------|
+| `scripts/train_mlp_spiral.py` | Train a NumPy MLP on 2D spiral data |
+| `scripts/inspect_attention.py` | Print attention weights for a toy sequence |
+| `scripts/train_gpt.py` | Train the local character-level GPT |
+| `scripts/chat_gpt.py` | Interactive or one-shot GPT queries |
+| `scripts/serve_gpt.py` | REST API for the trained GPT |
+
+---
 
 ## Suggested study cadence
 
-For each lesson, aim to produce three artifacts:
+For each deep-learning lesson, aim to produce three artifacts:
 
 1. A passing test.
 2. A small experiment result.
 3. A written explanation of the main idea.
 
-If you can make a broken training run work and explain why it was broken, you
-are learning the important part.
+If you can fix a broken training run and explain why it was broken, you are
+learning the important part.
+
+---
+
+## License
+
+Lesson content and notebook adaptations may include third-party material (e.g.
+[mlcourse.ai](https://mlcourse.ai), Kaggle competitions). Check individual
+notebooks for attribution and license details.
