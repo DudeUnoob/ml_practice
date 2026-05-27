@@ -1,1 +1,6 @@
 .venv
+__pycache__/
+.pytest_cache/
+*.egg-info/
+checkpoints/
+data/gpt/shakespeare.txt
